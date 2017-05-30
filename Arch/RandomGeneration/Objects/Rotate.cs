@@ -6,6 +6,8 @@ namespace Arch {
   namespace RandomGeneration {
     namespace Objects {
       public class Rotate : MonoBehaviour {
+        public float tiltMin = -5f;
+        public float tiltMax = 5f;
 
       	// Use this for initialization
       	void Start () {
@@ -19,7 +21,10 @@ namespace Arch {
 
         private void RotateObject() {
           float rotationY = 90.0f * (float)Random.Range (0, 4);
-          transform.Rotate (0, rotationY, 0);
+          float tiltX = Random.Range (tiltMin, tiltMax);
+          float tiltY = Random.Range (tiltMin, tiltMax);
+
+          transform.Rotate (tiltX, rotationY, tiltY);
         }
       }
     }
