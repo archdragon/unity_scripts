@@ -18,6 +18,7 @@ namespace Arch {
     [System.Serializable]
     public class LayerData {
       public string name;
+      public int[] data;
       public LayerObjectData[] objects;
     }
 
@@ -62,12 +63,21 @@ namespace Arch {
           for (int layerNum = 0; layerNum < levelData.layers.Length; layerNum++) {
             LayerData layerData = levelData.layers [layerNum];
             LayerObjectData[] layerObjects = layerData.objects;
-               
+
+            // TODO: Extract to methods
             for (int objectNum = 0; objectNum < layerObjects.Length; objectNum++) {
               LayerObjectData layerObject = layerObjects [objectNum];
 
               SpawnObject (layerObject, levelData);
             }
+
+            if (layerData.data != null) {
+
+              for (int tileNum = 0; tileNum < layerData.data.Length; tileNum++) {
+                SpawnTile (layerData.data, tileNum, levelData);
+              }
+            }
+
           }
     		}
     		else
@@ -78,6 +88,10 @@ namespace Arch {
 
       private void SpawnObject(LayerObjectData layerObject, LevelData levelData) {
         LayerObjectSpawner.Spawn (layerObject, levelData);
+      }
+
+      private void SpawnTile(int[] tilesData, int tileNum, LevelData levelData) {
+        LayerObjectSpawner.SpawnTile (tilesData, tileNum, levelData);
       }
     }
   }
